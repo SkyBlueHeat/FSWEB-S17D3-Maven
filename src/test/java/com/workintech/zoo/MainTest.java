@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ExtendWith(ResultAnalyzer.class)
+@ExtendWith(com.workintech.s17d2.ResultAnalyzer.class)
 class MainTest {
 
 
@@ -51,7 +51,7 @@ class MainTest {
 
     @Test
     @DisplayName("Test Kangaroo Creation and Field Access")
-     void testKangarooCreationAndFieldAccess() {
+    void testKangarooCreationAndFieldAccess() {
 
         Kangaroo kangaroo = new Kangaroo(1, "Kenny", 2.0, 85.0, "Male", false);
 
@@ -89,7 +89,7 @@ class MainTest {
     @DisplayName("Test Koala AllArgsConstructor")
     void testKoalaAllArgsConstructor() {
         // Creating an instance using all-args constructor
-        Koala koala = new Koala(1, "Kara", 20.0, 15.0, "Female");
+        Koala koala = new Koala(1, "Kara", 15.0, 20.0, "Female");
 
         // Assertions to ensure fields are set correctly
         assertEquals(1, koala.getId());
@@ -135,7 +135,7 @@ class MainTest {
 
     @Test
     @DisplayName("Test ZooErrorResponse AllArgsConstructor")
-     void testAllArgsConstructor() {
+    void testAllArgsConstructor() {
 
         long now = System.currentTimeMillis();
 
@@ -351,13 +351,13 @@ class MainTest {
     @Test
     @DisplayName("ZooGlobalExceptionHandler:HandleGenericException")
     void testHandleGenericException() throws Exception {
-    Kangaroo invalidKangaroo = new Kangaroo();
-    mockMvc.perform(post("/kangaroos")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(objectMapper.writeValueAsString(invalidKangaroo)))
-            .andExpect(status().isBadRequest())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.message").isNotEmpty())
-            .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()));
+        Kangaroo invalidKangaroo = new Kangaroo();
+        mockMvc.perform(post("/kangaroos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(invalidKangaroo)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").isNotEmpty())
+                .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()));
     }
 }
